@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyQuest - Multi-Subject Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1a1a1a;
+            padding: 20px;
+        }
+
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            min-height: 90vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .user-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-large {
+            padding: 20px 40px;
+            font-size: 1.2em;
+        }
+
+        .login-card {
+            max-width: 500px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .username-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .username-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 2px solid #e0e7ff;
+        }
+
+        .feature-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .feature-box ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-box li {
+            padding: 8px 0;
+            font-size: 1.05em;
+            color: #555;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .category-card {
+            background: white;
+            border: 3px solid #e0e7ff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .category-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .category-card h2 {
+            color: #667eea;
+            margin: 15px 0;
+            font-size: 1.5em;
+        }
+
+        .category-count {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .subject-card {
+            background: white;
+            border: 3px solid #e0e7ff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .subject-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .subject-card h2 {
+            color: #667eea;
+            margin: 15px 0;
+            font-size: 1.5em;
+        }
+
+        .subject-stats {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .mode-card {
+            background: linear-gradient(135deg, #fff, #f8f9ff);
+            border: 3px solid #e0e7ff;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .mode-card:hover h3,
+        .mode-card:hover p {
+            color: white;
+        }
+
+        .mode-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+
+        .mode-card h3 {
+            color: #667eea;
+            margin: 10px 0;
+            font-size: 1.3em;
+        }
+
+        .mode-card p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .custom-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 10px 0;
+        }
+
+        .add-card {
+            border: 3px dashed #667eea;
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 3px solid #667eea;
+        }
+
+        .question-text {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .choices {
+            display: grid;
+            gap: 15px;
+        }
+
+        .choice-btn {
+            padding: 20px;
+            text-align: left;
+            font-size: 1.1em;
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        /* Custom Creator Styles */
+        .creator-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #e0e7ff;
+        }
+
+        .creator-label {
+            display: block;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .creator-input, .creator-textarea, .creator-select {
+            width: 100%;
+            padding: 15px;
+            font-size: 1em;
+            border: 2px solid #e0e7ff;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .creator-input:focus, .creator-textarea:focus, .creator-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .creator-textarea {
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .icon-btn {
+            font-size: 2em;
+            padding: 15px;
+            border: 2px solid #e0e7ff;
+            border-radius: 10px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover, .icon-btn.selected {
+            background: #667eea;
+            transform: scale(1.1);
+        }
+
+        .format-help {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .format-example {
+            background: white;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            border: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .app {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .mode-grid,
+            .subject-grid,
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-badge {
+                position: relative;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // Account System
+        let account = {
+            username: '',
+            isLoggedIn: false,
+            subjects: {},
+            customSubjects: {}
+        };
+
+        // Categories
+        const CATEGORIES = {
+            'health': {
+                id: 'health',
+                name: 'Health',
+                icon: '🛡️',
+                color: '#ef4444'
+            },
+            'science': {
+                id: 'science',
+                name: 'Science',
+                icon: '🔬',
+                color: '#10b981'
+            },
+            'math': {
+                id: 'math',
+                name: 'Math',
+                icon: '🧮',
+                color: '#3b82f6'
+            },
+            'language': {
+                id: 'language',
+                name: 'Language',
+                icon: '📖',
+                color: '#f59e0b'
+            },
+            'custom': {
+                id: 'custom',
+                name: 'Custom',
+                icon: '✨',
+                color: '#8b5cf6'
+            }
+        };
+
+        // Built-in Subjects
+        const SUBJECTS = {
+            'health-antibullying': {
+                id: 'health-antibullying',
+                category: 'health',
+                name: 'Anti-Bullying',
+                icon: '🛡️',
+                questions: [
+                    {
+                        question: "Who are the 3 main participants in a bullying incident?",
+                        choices: ["Bully, Target, Bystander", "Teacher, Student, Parent", "Aggressor, Victim, Friend", "Leader, Follower, Observer"],
+                        answer: 0
+                    },
+                    {
+                        question: "What is someone who does something to stop the incident called?",
+                        choices: ["Bystander", "Upstander", "Observer", "Witness"],
+                        answer: 1
+                    },
+                    {
+                        question: "What is the #1 most important thing to do when you witness bullying?",
+                        choices: ["Ignore it", "Join in", "Report it to a trusted adult", "Record it secretly"],
+                        answer: 2
+                    },
+                    {
+                        question: "What is the #1 thing a person can do for the target of bullying?",
+                        choices: ["Laugh with others", "Be a friend / Show support", "Avoid them", "Tell them to fight back"],
+                        answer: 1
+                    },
+                    {
+                        question: "Which is NOT a good way to disrupt a bullying situation?",
+                        choices: ["Speak up and tell the bully to stop", "Join in with the bully", "Get help from an adult", "Support the target"],
+                        answer: 1
+                    },
+                    {
+                        question: "What is the #1 reason people don't get involved in a bullying situation?",
+                        choices: ["They don't care", "Fear of becoming the target themselves", "They think it's funny", "They're too busy"],
+                        answer: 1
+                    },
+                    {
+                        question: "True or False: Girls bully more than boys do.",
+                        choices: ["True - girls are meaner", "False - boys and girls bully at similar rates but use different methods", "True - boys don't bully", "False - only boys bully"],
+                        answer: 1
+                    },
+                    {
+                        question: "If you are cyberbullied, what should you do FIRST?",
+                        choices: ["Respond with mean messages", "Don't respond - save evidence", "Delete everything", "Share it with friends"],
+                        answer: 1
+                    },
+                    {
+                        question: "What should you do with evidence of cyberbullying?",
+                        choices: ["Delete it immediately", "Save/Screenshot it and tell a trusted adult", "Share it publicly", "Ignore it"],
+                        answer: 1
+                    },
+                    {
+                        question: "What type of photos sent digitally almost always get passed on to others?",
+                        choices: ["Food photos", "Explicit/Inappropriate photos", "Vacation photos", "Selfies"],
+                        answer: 1
+                    },
+                    {
+                        question: "What is 'sextortion'?",
+                        choices: ["A type of virus", "A scam where someone blackmails you with explicit photos for money", "A social media platform", "A gaming term"],
+                        answer: 1
+                    },
+                    {
+                        question: "Why should slurs be removed from your vocabulary?",
+                        choices: ["They're outdated", "They are harmful and discriminatory", "They're hard to spell", "Teachers don't like them"],
+                        answer: 1
+                    },
+                    {
+                        question: "Sexual harassment is often excused as what?",
+                        choices: ["A mistake", "A joke or compliment", "An accident", "Miscommunication"],
+                        answer: 1
+                    },
+                    {
+                        question: "What is the key difference between flirting and sexual harassment?",
+                        choices: ["The time of day", "Explicit consent - harassment is unwanted", "The location", "The person's age"],
+                        answer: 1
+                    },
+                    {
+                        question: "Which is an example of relational/social bullying?",
+                        choices: ["Hitting someone", "Spreading rumors and excluding people", "Stealing lunch money", "Pushing in line"],
+                        answer: 1
+                    },
+                    {
+                        question: "What should you do if a friend tells you they're being bullied?",
+                        choices: ["Tell them to ignore it", "Listen, believe them, and help them report it", "Laugh it off", "Tell everyone about it"],
+                        answer: 1
+                    },
+                    {
+                        question: "Creating a distraction when you see bullying is an example of being:",
+                        choices: ["A bully", "An upstander", "A bystander", "Unhelpful"],
+                        answer: 1
+                    },
+                    {
+                        question: "If someone sends you an inappropriate photo, you should:",
+                        choices: ["Forward it to friends", "Delete it and tell a trusted adult immediately", "Save it for later", "Reply with your own photo"],
+                        answer: 1
+                    },
+                    {
+                        question: "Walking away with the target of bullying is:",
+                        choices: ["Rude", "A way to disrupt bullying and show support", "Ignoring the problem", "Being a coward"],
+                        answer: 1
+                    },
+                    {
+                        question: "Boys typically use _____ bullying while girls typically use _____ bullying:",
+                        choices: ["Verbal, Physical", "Physical, Relational/Social", "Cyber, Verbal", "None, Both"],
+                        answer: 1
+                    },
+                    {
+                        question: "Documenting/recording a bullying incident can be helpful for:",
+                        choices: ["Entertainment", "Providing evidence to authorities", "Embarrassing people", "Going viral"],
+                        answer: 1
+                    },
+                    {
+                        question: "What does it mean to be an 'active bystander'?",
+                        choices: ["Watch and do nothing", "Take action to help stop bullying", "Record everything", "Tell the bully to continue"],
+                        answer: 1
+                    },
+                    {
+                        question: "If you witness cyberbullying on social media, you should:",
+                        choices: ["Like and share it", "Report it to the platform and tell an adult", "Comment and join in", "Ignore it completely"],
+                        answer: 1
+                    },
+                    {
+                        question: "Which is NOT appropriate consent in flirting?",
+                        choices: ["Clear verbal yes", "Enthusiastic participation", "Silence or no response", "Mutual interest"],
+                        answer: 2
+                    },
+                    {
+                        question: "Standing with a target of bullying shows them:",
+                        choices: ["You're weak too", "They have support and aren't alone", "You want attention", "Nothing important"],
+                        answer: 1
+                    }
+                ],
+                flashcards: [
+                    { term: "Bully", definition: "A person who uses strength or power to harm or intimidate others" },
+                    { term: "Target", definition: "The person being bullied (victim)" },
+                    { term: "Bystander", definition: "Someone who witnesses bullying but doesn't intervene" },
+                    { term: "Upstander", definition: "Someone who takes action to stop bullying" },
+                    { term: "Cyberbullying", definition: "Bullying that takes place online or through digital devices" },
+                    { term: "Sextortion", definition: "Blackmail involving explicit photos to extort money or more images" },
+                    { term: "Relational Bullying", definition: "Harming someone's relationships or social status (spreading rumors, exclusion)" },
+                    { term: "Physical Bullying", definition: "Using physical force to hurt someone (hitting, pushing)" },
+                    { term: "Verbal Bullying", definition: "Using words to hurt someone (name-calling, threats)" },
+                    { term: "Sexual Harassment", definition: "Unwanted sexual advances, comments, or conduct" },
+                    { term: "Consent", definition: "Clear, voluntary agreement - the key difference between flirting and harassment" },
+                    { term: "Slur", definition: "An offensive term used to demean a group of people" }
+                ]
+            },
+            'biology-photosynthesis': {
+                id: 'biology-photosynthesis',
+                category: 'science',
+                name: 'Photosynthesis & Respiration',
+                icon: '🌱',
+                questions: [
+                    {
+                        question: "Where does photosynthesis occur?",
+                        choices: ["Mitochondria", "Nucleus", "Chloroplasts", "Ribosomes"],
+                        answer: 2
+                    },
+                    {
+                        question: "What is the primary product of photosynthesis?",
+                        choices: ["Oxygen", "Glucose", "Carbon Dioxide", "Water"],
+                        answer: 1
+                    },
+                    {
+                        question: "What are the two main stages of photosynthesis?",
+                        choices: ["Light reactions and Calvin Cycle", "Glycolysis and Krebs Cycle", "Fermentation and Respiration", "Mitosis and Meiosis"],
+                        answer: 0
+                    },
+                    {
+                        question: "What is the function of chlorophyll?",
+                        choices: ["Store energy", "Absorb light energy", "Release oxygen", "Break down glucose"],
+                        answer: 1
+                    },
+                    {
+                        question: "Which organelle is known as the powerhouse of the cell?",
+                        choices: ["Nucleus", "Chloroplast", "Mitochondria", "Ribosome"],
+                        answer: 2
+                    },
+                    {
+                        question: "What are the three stages of cellular respiration?",
+                        choices: ["Glycolysis, Krebs Cycle, Electron Transport Chain", "Light reactions, Calvin Cycle, ATP synthesis", "Photosynthesis, Respiration, Fermentation", "Mitosis, Meiosis, Cytokinesis"],
+                        answer: 0
+                    },
+                    {
+                        question: "What is the net ATP production from glycolysis?",
+                        choices: ["2 ATP", "4 ATP", "36 ATP", "38 ATP"],
+                        answer: 0
+                    },
+                    {
+                        question: "What is fermentation?",
+                        choices: ["Aerobic respiration", "Anaerobic glucose breakdown", "Photosynthesis without light", "Cell division"],
+                        answer: 1
+                    },
+                    {
+                        question: "What are the two types of fermentation?",
+                        choices: ["Aerobic and Anaerobic", "Light and Dark", "Lactic acid and Alcoholic", "Glycolysis and Krebs"],
+                        answer: 2
+                    },
+                    {
+                        question: "Where does the Krebs Cycle occur?",
+                        choices: ["Cytoplasm", "Mitochondrial matrix", "Chloroplast", "Nucleus"],
+                        answer: 1
+                    }
+                ],
+                flashcards: [
+                    { term: "Photosynthesis", definition: "Process where plants convert sunlight to energy" },
+                    { term: "Chloroplast", definition: "Organelle where photosynthesis occurs" },
+                    { term: "Chlorophyll", definition: "Green pigment that absorbs light" },
+                    { term: "Glucose", definition: "Sugar produced by photosynthesis" },
+                    { term: "Mitochondria", definition: "Powerhouse of the cell" },
+                    { term: "ATP", definition: "Energy currency of the cell" },
+                    { term: "Cellular Respiration", definition: "Process that breaks down glucose for energy" },
+                    { term: "Glycolysis", definition: "First stage of respiration in cytoplasm" },
+                    { term: "Krebs Cycle", definition: "Second stage in mitochondrial matrix" },
+                    { term: "Fermentation", definition: "Anaerobic breakdown of glucose" }
+                ]
+            }
+        };
+
+        let currentCategory = null;
+        let currentSubject = null;
+        let currentMode = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedIcon = '📚';
+
+        // Load account
+        function loadAccount() {
+            const saved = localStorage.getItem('studyquest-account');
+            if (saved) {
+                account = JSON.parse(saved);
+                account.isLoggedIn = true;
+            }
+            
+            // Load custom subjects
+            const customSaved = localStorage.getItem('studyquest-custom');
+            if (customSaved) {
+                account.customSubjects = JSON.parse(customSaved);
+                Object.assign(SUBJECTS, account.customSubjects);
+            }
+        }
+
+        // Save account
+        function saveAccount() {
+            localStorage.setItem('studyquest-account', JSON.stringify(account));
+            localStorage.setItem('studyquest-custom', JSON.stringify(account.customSubjects));
+        }
+
+        // Login
+        function handleLogin() {
+            const input = document.getElementById('username-input');
+            const username = input.value.trim();
+            
+            if (!username) {
+                alert('Please enter a username!');
+                return;
+            }
+            
+            account.username = username;
+            account.isLoggedIn = true;
+            saveAccount();
+            render();
+        }
+
+        // Logout
+        function handleLogout() {
+            if (confirm('Logout? Your progress is saved!')) {
+                account.isLoggedIn = false;
+                currentCategory = null;
+                currentSubject = null;
+                currentMode = null;
+                render();
+            }
+        }
+
+        // Select category
+        function selectCategory(categoryId) {
+            currentCategory = categoryId;
+            currentSubject = null;
+            currentMode = null;
+            render();
+        }
+
+        // Back to categories
+        function backToCategories() {
+            currentCategory = null;
+            currentSubject = null;
+            currentMode = null;
+            render();
+        }
+
+        // Select subject
+        function selectSubject(subjectId) {
+            currentSubject = subjectId;
+            currentMode = null;
+            render();
+        }
+
+        // Back to subjects
+        function backToSubjects() {
+            currentSubject = null;
+            currentMode = null;
+            render();
+        }
+
+        // Select mode
+        function selectMode(mode) {
+            currentMode = mode;
+            currentQuestion = 0;
+            score = 0;
+            render();
+        }
+
+        // Back to modes
+        function backToModes() {
+            currentMode = null;
+            render();
+        }
+
+        // Answer question
+        function answerQuestion(answerIndex) {
+            const subject = SUBJECTS[currentSubject];
+            const question = subject.questions[currentQuestion];
+            
+            if (answerIndex === question.answer) {
+                score++;
+                alert('✅ Correct!');
+            } else {
+                alert('❌ Wrong! Correct answer: ' + question.choices[question.answer]);
+            }
+            
+            currentQuestion++;
+            
+            if (currentQuestion >= subject.questions.length) {
+                alert(`🎉 Quiz Complete! Score: ${score}/${subject.questions.length}`);
+                currentMode = null;
+            }
+            
+            render();
+        }
+
+        // Open custom creator
+        function openCustomCreator() {
+            currentMode = 'create';
+            render();
+        }
+
+        // Select icon
+        function selectIconForCustom(icon) {
+            selectedIcon = icon;
+            document.querySelectorAll('.icon-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        // Create custom subject
+        function createCustomSubject() {
+            const name = document.getElementById('custom-name').value.trim();
+            const category = document.getElementById('custom-category').value;
+            const questionsText = document.getElementById('custom-questions').value;
+            const flashcardsText = document.getElementById('custom-flashcards').value;
+            
+            if (!name) {
+                alert('Please enter a name!');
+                return;
+            }
+            
+            if (!questionsText.trim()) {
+                alert('Please add at least one question!');
+                return;
+            }
+            
+            // Parse questions
+            const questions = parseQuestions(questionsText);
+            const flashcards = parseFlashcards(flashcardsText);
+            
+            if (questions.length === 0) {
+                alert('No valid questions found! Check your format.');
+                return;
+            }
+            
+            const subjectId = 'custom-' + Date.now();
+            const newSubject = {
+                id: subjectId,
+                category: category,
+                name: name,
+                icon: selectedIcon,
+                questions: questions,
+                flashcards: flashcards,
+                isCustom: true
+            };
+            
+            SUBJECTS[subjectId] = newSubject;
+            account.customSubjects[subjectId] = newSubject;
+            saveAccount();
+            
+            alert(`✅ Created "${name}" with ${questions.length} questions!`);
+            currentMode = null;
+            render();
+        }
+
+        // Parse questions from text
+        function parseQuestions(text) {
+            const questions = [];
+            const lines = text.split('\n').filter(line => line.trim());
+            
+            let currentQuestion = null;
+            let choices = [];
+            let answerIndex = 0;
+            
+            for (let line of lines) {
+                line = line.trim();
+                
+                if (line.match(/^Q\d*[:.]?\s*/i) || (!currentQuestion && line.includes('?'))) {
+                    if (currentQuestion && choices.length >= 2) {
+                        questions.push({
+                            question: currentQuestion,
+                            choices: choices,
+                            answer: answerIndex
+                        });
+                    }
+                    
+                    currentQuestion = line.replace(/^Q\d*[:.]?\s*/i, '').trim();
+                    choices = [];
+                    answerIndex = 0;
+                }
+                else if (line.match(/^[A-D1-4][\.):\s]/i)) {
+                    const choice = line.replace(/^[A-D1-4][\.):\s]+/i, '').trim();
+                    const isCorrect = choice.includes('*') || choice.includes('✓') || 
+                                    choice.match(/\(correct\)/i) || choice.match(/\[correct\]/i);
+                    
+                    if (isCorrect) {
+                        answerIndex = choices.length;
+                    }
+                    
+                    const cleanChoice = choice.replace(/[\*✓]/g, '')
+                                             .replace(/\(correct\)/gi, '')
+                                             .replace(/\[correct\]/gi, '')
+                                             .trim();
+                    choices.push(cleanChoice);
+                }
+            }
+            
+            if (currentQuestion && choices.length >= 2) {
+                questions.push({
+                    question: currentQuestion,
+                    choices: choices,
+                    answer: answerIndex
+                });
+            }
+            
+            return questions;
+        }
+
+        // Parse flashcards
+        function parseFlashcards(text) {
+            if (!text || !text.trim()) return [];
+            
+            const flashcards = [];
+            const lines = text.split('\n').filter(line => line.trim());
+            
+            for (let line of lines) {
+                const match = line.match(/^(.+?)[:|-](.+)$/);
+                if (match) {
+                    flashcards.push({
+                        term: match[1].trim(),
+                        definition: match[2].trim()
+                    });
+                }
+            }
+            
+            return flashcards;
+        }
+
+        // Get subjects by category
+        function getSubjectsByCategory(categoryId) {
+            return Object.values(SUBJECTS).filter(s => s.category === categoryId);
+        }
+
+        // Count subjects in category
+        function countSubjectsInCategory(categoryId) {
+            return getSubjectsByCategory(categoryId).length;
+        }
+
+        // Render
+        function render() {
+            const root = document.getElementById('root');
+            
+            // Login screen
+            if (!account.isLoggedIn) {
+                root.innerHTML = `
+                    <div class="app">
+                        <div class="header">
+                            <h1>🎓 StudyQuest</h1>
+                            <p>Multi-Subject Learning Platform</p>
+                        </div>
+                        <div class="login-card">
+                            <h2>Welcome!</h2>
+                            <p style="color: #666; margin-bottom: 20px;">Create your account to start learning</p>
+                            <input type="text" id="username-input" class="username-input" 
+                                   placeholder="Enter your username..." 
+                                   onkeypress="if(event.key==='Enter') handleLogin()">
+                            <button class="btn btn-primary btn-large" onclick="handleLogin()">
+                                🚀 Get Started
+                            </button>
+                            <div class="feature-box">
+                                <h3>✨ Features</h3>
+                                <ul>
+                                    <li>📚 Organized by categories (Health, Science, Math, Language)</li>
+                                    <li>🎮 Interactive quiz modes</li>
+                                    <li>📝 Create your own study sets</li>
+                                    <li>💾 Auto-save progress</li>
+                                    <li>🎨 Beautiful interface</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    const input = document.getElementById('username-input');
+                    if (input) input.focus();
+                }, 100);
+                return;
+            }
+
+            // Category selection
+            if (!currentCategory) {
+                root.innerHTML = `
+                    <div class="app">
+                        <div class="header">
+                            <div class="user-badge">👤 ${account.username}</div>
+                            <h1>🎓 StudyQuest</h1>
+                            <p>Choose a Category</p>
+                        </div>
+                        <div class="category-grid">
+                            ${Object.values(CATEGORIES).map(cat => {
+                                const count = countSubjectsInCategory(cat.id);
+                                return `
+                                    <div class="category-card" onclick="selectCategory('${cat.id}')">
+                                        <div class="category-icon">${cat.icon}</div>
+                                        <h2>${cat.name}</h2>
+                                        <p class="category-count">${count} ${count === 1 ? 'subject' : 'subjects'}</p>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="handleLogout()">
+                                🚪 Logout
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Subject selection within category
+            if (!currentSubject || currentMode === 'create') {
+                if (currentMode === 'create') {
+                    // Custom creator
+                    root.innerHTML = `
+                        <div class="app">
+                            <div class="header">
+                                <h1>📝 Create Study Set</h1>
+                                <p>Add your own questions and flashcards</p>
+                            </div>
+                            <div style="max-width: 900px; margin: 0 auto;">
+                                <div class="creator-section">
+                                    <label class="creator-label">📚 Study Set Name:</label>
+                                    <input type="text" id="custom-name" class="creator-input" placeholder="e.g., Spanish Vocabulary" maxlength="50">
+                                </div>
+                                
+                                <div class="creator-section">
+                                    <label class="creator-label">📂 Category:</label>
+                                    <select id="custom-category" class="creator-select">
+                                        <option value="${currentCategory}">${CATEGORIES[currentCategory].name}</option>
+                                        ${Object.values(CATEGORIES).filter(c => c.id !== currentCategory).map(c => `
+                                            <option value="${c.id}">${c.name}</option>
+                                        `).join('')}
+                                    </select>
+                                </div>
+                                
+                                <div class="creator-section">
+                                    <label class="creator-label">🎨 Choose Icon:</label>
+                                    <div class="icon-grid">
+                                        ${['📚', '📖', '✏️', '🧮', '🌍', '🔬', '⚗️', '🎨', '🎭', '🎵', '⚽', '🏀', '💻', '📱', '🚀', '⭐'].map(icon => `
+                                            <button class="icon-btn ${icon === '📚' ? 'selected' : ''}" onclick="selectIconForCustom('${icon}')">${icon}</button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="creator-section">
+                                    <label class="creator-label">❓ Questions (Required):</label>
+                                    <div class="format-help">
+                                        <strong>Format:</strong> Mark correct answer with * or ✓
+                                        <div class="format-example">Q1: What is 2+2?<br>A. 3<br>B. 4 * (correct)<br>C. 5<br>D. 6</div>
+                                    </div>
+                                    <textarea id="custom-questions" class="creator-textarea" rows="12" placeholder="Paste questions here..."></textarea>
+                                </div>
+                                
+                                <div class="creator-section">
+                                    <label class="creator-label">🃏 Flashcards (Optional):</label>
+                                    <div class="format-help">
+                                        <strong>Format:</strong> Term: Definition
+                                        <div class="format-example">Photosynthesis: Process plants use to make food</div>
+                                    </div>
+                                    <textarea id="custom-flashcards" class="creator-textarea" rows="8" placeholder="Term: Definition"></textarea>
+                                </div>
+                                
+                                <div class="action-bar">
+                                    <button class="btn btn-primary btn-large" onclick="createCustomSubject()">
+                                        ✅ Create Study Set
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="currentMode = null; render();">
+                                        ❌ Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const categorySubjects = getSubjectsByCategory(currentCategory);
+                const category = CATEGORIES[currentCategory];
+                
+                root.innerHTML = `
+                    <div class="app">
+                        <div class="header">
+                            <div class="user-badge">${category.icon} ${category.name}</div>
+                            <h1>🎓 StudyQuest</h1>
+                            <p>Choose a Study Set</p>
+                        </div>
+                        <div class="subject-grid">
+                            ${categorySubjects.map(subject => `
+                                <div class="subject-card" onclick="selectSubject('${subject.id}')">
+                                    <div class="subject-icon">${subject.icon}</div>
+                                    <h2>${subject.name}</h2>
+                                    ${subject.isCustom ? '<div class="custom-badge">✨ Custom</div>' : ''}
+                                    <p>${subject.questions.length} questions • ${subject.flashcards.length} flashcards</p>
+                                    <button class="btn btn-primary" onclick="event.stopPropagation(); selectSubject('${subject.id}')">
+                                        Start Learning →
+                                    </button>
+                                </div>
+                            `).join('')}
+                            
+                            <div class="subject-card add-card" onclick="openCustomCreator()">
+                                <div class="subject-icon">➕</div>
+                                <h2>Create New</h2>
+                                <p>Add your own study set</p>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="backToCategories()">
+                                ← Back to Categories
+                            </button>
+                            <button class="btn btn-secondary" onclick="handleLogout()">
+                                🚪 Logout
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Mode selection
+            if (!currentMode) {
+                const subject = SUBJECTS[currentSubject];
+                root.innerHTML = `
+                    <div class="app">
+                        <div class="header">
+                            <div class="user-badge">${subject.icon} ${subject.name}</div>
+                            <h1>🎓 StudyQuest</h1>
+                            <p>Choose Study Mode</p>
+                        </div>
+                        <div class="mode-grid">
+                            <div class="mode-card" onclick="selectMode('quiz')">
+                                <div class="mode-icon">📝</div>
+                                <h3>Quiz Mode</h3>
+                                <p>${subject.questions.length} questions</p>
+                            </div>
+                            <div class="mode-card" onclick="selectMode('flashcards')">
+                                <div class="mode-icon">🃏</div>
+                                <h3>Flashcards</h3>
+                                <p>${subject.flashcards.length} cards</p>
+                            </div>
+                            <div class="mode-card" onclick="selectMode('practice')">
+                                <div class="mode-icon">⚡</div>
+                                <h3>Practice</h3>
+                                <p>Quick review</p>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="backToSubjects()">
+                                ← Back to Subjects
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Quiz mode
+            if (currentMode === 'quiz') {
+                const subject = SUBJECTS[currentSubject];
+                const question = subject.questions[currentQuestion];
+                
+                root.innerHTML = `
+                    <div class="app">
+                        <div class="header">
+                            <div class="user-badge">Question ${currentQuestion + 1}/${subject.questions.length} • Score: ${score}</div>
+                            <h1>${subject.icon} ${subject.name}</h1>
+                            <p>Quiz Mode</p>
+                        </div>
+                        <div style="max-width: 800px; margin: 40px auto;">
+                            <div class="question-box">
+                                <div class="question-text">${question.question}</div>
+                            </div>
+                            <div class="choices">
+                                ${question.choices.map((choice, index) => `
+                                    <button class="choice-btn" onclick="answerQuestion(${index})">
+                                        ${String.fromCharCode(65 + index)}. ${choice}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" onclick="backToModes()">
+                                ← Back to Modes
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize
+        loadAccount();
+        render();
+    </script>
+</body>
+</html>
